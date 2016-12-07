@@ -31,4 +31,13 @@ public class UserDAO {
         List<User> result = mapper.scan(User.class, scanExpression);
         return result;
     }
+    
+    public User getByEmail(String email) {
+        return this.mapper.load(User.class, email);
+    }
+    
+    public User createUser(User newUser) {
+        this.mapper.save(newUser);
+        return this.mapper.load(User.class, newUser.getEmail());
+    }
 }
