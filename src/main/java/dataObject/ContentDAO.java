@@ -8,7 +8,8 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 
-public class AddressDAO {
+
+public class ContentDAO {
 	private AmazonDynamoDBClient dynamoDB;
 	private DynamoDBMapper mapper;
 	
@@ -19,11 +20,33 @@ public class AddressDAO {
         mapper = new DynamoDBMapper(dynamoDB);
     }
     
-    public List<AddressItem> scan() {
-    	//ScanRequest scanRequest = new ScanRequest("Address");
-        //ScanResult scanResult = dynamoDB.scan(scanRequest);
+    public List<ContentItem> scan() {
         DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
-        List<AddressItem> scanResult = mapper.scan(AddressItem.class, scanExpression);
+        List<ContentItem> scanResult = mapper.scan(ContentItem.class, scanExpression);
         return scanResult;
+    }
+    
+    public ContentItem query(String contentId){
+    	return mapper.load(ContentItem.class, contentId);
+    }
+    
+    public boolean createContent(ContentItem newItem) {
+    	if (query(newItem.getContentId()) == null){
+    		this.mapper.save(newItem);
+    		return true;
+    	}
+    	else {
+    		return false;
+    	}
+    }
+    
+    public boolean updateContent(ContentItem newItem) {
+    	if (query(newItem.getContentId()) == null){
+    		return false;
+    	}
+    	else {
+    		this.mapper.save(newItem);
+    		return true;
+    	}
     }
 }

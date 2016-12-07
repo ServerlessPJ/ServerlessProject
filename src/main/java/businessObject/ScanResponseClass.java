@@ -2,20 +2,20 @@ package businessObject;
 
 import java.util.List;
 
-import dataObject.AddressItem;
+import dataObject.ContentItem;
 
 public class ScanResponseClass {
-	List<AddressItem> items;
+	List<ContentItem> items;
 
-	public List<AddressItem> getItems() {
+	public List<ContentItem> getItems() {
 		return items;
 	}
 
-	public void setItems(List<AddressItem> items) {
+	public void setItems(List<ContentItem> items) {
 		this.items = items;
 	}
 
-	public ScanResponseClass(List<AddressItem> items) {
+	public ScanResponseClass(List<ContentItem> items) {
 		this.items = items;
 	}
 }
