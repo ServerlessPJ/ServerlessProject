@@ -1,0 +1,5 @@
+#Lambda Function Project Metadata
+#Wed Dec 07 11:36:29 EST 2016
+lastDeploymentFunctionName=UserLambda
+lastDeploymentBucketName=hellolambdajavazzhenli
+lastDeploymentEndpoint=https\://lambda.us-east-1.amazonaws.com/

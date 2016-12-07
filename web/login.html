@@ -25,8 +25,7 @@
     } else {
       // The person is not logged into Facebook, so we're not sure if
       // they are logged into this app or not.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into Facebook.';
+      console.log('Please log into Facebook.');
     }
   }
 
@@ -80,26 +79,73 @@
   function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me?fields=name,email', function(response) {
+      var indexOfSpace = response.name.indexOf(' ');
+      app.firstname = response.name.substring(0, indexOfSpace);
+      app.lastname = response.name.substring(indexOfSpace + 1);
+      app.email = response.email;
+      app.uid = response.id;
       console.log('Successful login for: ' + response.name);
       console.log(JSON.stringify(response));
-      document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
+      // document.getElementById('status').innerHTML =
+      //   'Thanks for logging in, ' + response.name + '!';
     });
   }
 
 </script>
-
+<!-- add Vue.js -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
 <!--
   Below we include the Login Button social plugin. This button uses
   the JavaScript SDK to present a graphical Login button that triggers
   the FB.login() function when clicked.
 -->
-
-<fb:login-button scope="email,public_profile" onlogin="checkLoginState();">
-</fb:login-button>
-
-<div id="status">
+<div id="regForm">
+  <form>
+    <div>
+      <label>First Name</label>
+      <input type="text" v-model="firstname">
+    </div>
+    <div>
+      <label>Last Name</label>
+      <input type="text" v-model="lastname">
+    </div>
+    <div>
+      <label>E-mail</label>
+      <input type="email" v-model="email">
+    </div>
+    <div>
+      <label>Password</label>
+      <input type="password" v-model="password">
+    </div>
+    <div>
+      <label>Phone Number</label>
+      <input type="tel" v-model="phone_number">
+    </div>
+    <div>
+      <label>Address</label>
+      <input type="text" v-model="address_ref">
+    </div>
+  </form>
+  <input type="button" value="Login">
 </div>
 
+
+<fb:login-button auto_logout_link="true" scope="email,public_profile" onlogin="checkLoginState();">
+</fb:login-button>
+
+<div id="status">Please Log in With Facebook</div>
+<script>
+  var app = new Vue({
+    el: "#regForm",
+    data: {
+      firstname: "",
+      lastname: "",
+      email: "",
+      phone_number: "",
+      address_ref: "",
+      password: ""
+    }
+  });
+</script>
 </body>
 </html>
